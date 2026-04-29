@@ -1,0 +1,195 @@
+[
+  {
+    "id": "STD-001",
+    "title": "Conveyor Belt Tension and Alignment Standard",
+    "plant_ids": ["spokane-assembly", "tacoma-fabrication"],
+    "equipment_types": ["conveyor"],
+    "summary": "Belt tension must be maintained between 150–200 N/m. Misalignment exceeding 5 mm from centerline triggers mandatory adjustment. Vibration amplitude above 2.5 mm/s RMS on conveyor bearings requires immediate inspection.",
+    "thresholds": {
+      "belt_tension_min_N_m": 150,
+      "belt_tension_max_N_m": 200,
+      "misalignment_threshold_mm": 5,
+      "vibration_rms_alert_mm_s": 2.5
+    },
+    "reference": "ENG-CONV-2023-11",
+    "last_revised": "2023-11-15"
+  },
+  {
+    "id": "STD-002",
+    "title": "Bearing Lubrication and PM Schedule",
+    "plant_ids": ["spokane-assembly", "tacoma-fabrication", "bend-packaging"],
+    "equipment_types": ["conveyor", "mixer", "press"],
+    "summary": "Class-2 bearings require re-lubrication every 500 operating hours or 90 days, whichever comes first. Grease type: NLGI Grade 2 lithium complex. Overlubrication is a documented failure mode — do not exceed 3 cc per fitting.",
+    "thresholds": {
+      "relubrication_interval_hours": 500,
+      "relubrication_interval_days": 90,
+      "grease_cc_per_fitting_max": 3
+    },
+    "reference": "MAINT-LUB-2024-02",
+    "last_revised": "2024-02-01"
+  },
+  {
+    "id": "STD-003",
+    "title": "Line Changeover Procedure — Spokane Assembly",
+    "plant_ids": ["spokane-assembly"],
+    "line_ids": ["SAP-LINE-A", "SAP-LINE-B", "SAP-LINE-C"],
+    "summary": "Changeover sequence: (1) clear WIP, (2) verify LOTO, (3) clean contact surfaces per SAN-004, (4) install tooling per traveler, (5) first-article inspection before production release. Changeover must not exceed 45 minutes. Skipping first-article inspection is a Major nonconformance.",
+    "reference": "OPS-CO-SPK-2024-01",
+    "last_revised": "2024-01-20"
+  },
+  {
+    "id": "STD-004",
+    "title": "Sanitation Protocol — Food Contact Surfaces",
+    "plant_ids": ["bend-packaging"],
+    "line_ids": ["BPK-LINE-1", "BPK-LINE-2"],
+    "summary": "Pre-production sanitation required after any changeover or 8-hour idle. Steps: dry clean, wet wash (70°C, pH 9–11 detergent), rinse, sanitize (200 ppm chlorine), air-dry minimum 15 min. ATP swab results must be ≤100 RLU before production restart. Skipping sanitization after idle ≥8 h is a Critical nonconformance.",
+    "thresholds": {
+      "wash_temp_c": 70,
+      "detergent_ph_min": 9,
+      "detergent_ph_max": 11,
+      "sanitizer_ppm": 200,
+      "atp_rlu_ceiling": 100,
+      "idle_threshold_hours": 8
+    },
+    "reference": "SAN-004",
+    "last_revised": "2024-03-10"
+  },
+  {
+    "id": "STD-005",
+    "title": "Supplier Incoming Inspection — Raw Material Acceptance",
+    "plant_ids": ["spokane-assembly", "tacoma-fabrication", "bend-packaging"],
+    "summary": "Every incoming lot must pass: dimensional check (AQL 1.0), material cert review, and functional sample test. Lots failing any criterion are tagged HOLD and quarantined. Supplier must be notified within 24 h with a Supplier Corrective Action Request (SCAR). Three SCAR events in 12 months triggers supplier audit.",
+    "thresholds": {
+      "aql_level": 1.0,
+      "scar_audit_trigger_count": 3,
+      "scar_audit_trigger_months": 12,
+      "notification_window_hours": 24
+    },
+    "reference": "QMS-INC-2024-05",
+    "last_revised": "2024-05-01"
+  },
+  {
+    "id": "STD-006",
+    "title": "Statistical Process Control — Control Chart Rules",
+    "plant_ids": ["spokane-assembly", "tacoma-fabrication", "bend-packaging"],
+    "summary": "Nelson rules apply to all critical-to-quality characteristics. Out-of-control signals: 1 point beyond 3σ, 2 of 3 consecutive beyond 2σ, 8 consecutive on same side of mean, 6 consecutive trending up/down. Any signal requires documented response within 30 minutes.",
+    "reference": "QMS-SPC-2023-08",
+    "last_revised": "2023-08-15"
+  },
+  {
+    "id": "STD-007",
+    "title": "Lockout/Tagout Procedure",
+    "plant_ids": ["spokane-assembly", "tacoma-fabrication", "bend-packaging"],
+    "summary": "LOTO required before any maintenance, clearing of jams, or contact with moving parts. Steps: notify affected employees, identify all energy sources, apply lockout devices, verify zero energy state (test all start buttons, release stored energy). Only the technician who applied the lock may remove it. No exceptions.",
+    "reference": "EHS-LOTO-2023-05",
+    "last_revised": "2023-05-10"
+  },
+  {
+    "id": "STD-008",
+    "title": "Throughput Monitoring and Downtime Classification",
+    "plant_ids": ["spokane-assembly", "tacoma-fabrication", "bend-packaging"],
+    "summary": "Throughput deviation alert: >10% below baseline for >15 min triggers operator review. >20% below for >30 min triggers shift supervisor escalation. Downtime must be classified within 5 min: Planned / Unplanned-Equipment / Unplanned-Quality / Unplanned-Material / Unplanned-Labor. OEE target ≥85%.",
+    "thresholds": {
+      "throughput_alert_pct": 10,
+      "throughput_alert_min": 15,
+      "throughput_escalation_pct": 20,
+      "throughput_escalation_min": 30,
+      "oee_target_pct": 85
+    },
+    "reference": "OPS-KPI-2024-03",
+    "last_revised": "2024-03-01"
+  },
+  {
+    "id": "STD-009",
+    "title": "Tacoma Fabrication — Press Die Setup Standard",
+    "plant_ids": ["tacoma-fabrication"],
+    "line_ids": ["TFB-LINE-1", "TFB-LINE-2", "TFB-LINE-3"],
+    "summary": "Die clearance must be set to 10% of material thickness ±0.5%. Stripper plate spring force verified per die card. First-piece dimensional check required after every die setup or die change. Burr height ≤0.1 mm on finished parts.",
+    "thresholds": {
+      "die_clearance_pct_of_thickness": 10,
+      "die_clearance_tolerance_pct": 0.5,
+      "burr_height_max_mm": 0.1
+    },
+    "reference": "ENG-DIE-TFB-2024-01",
+    "last_revised": "2024-01-05"
+  },
+  {
+    "id": "STD-010",
+    "title": "Vibration Analysis — Predictive Maintenance Thresholds",
+    "plant_ids": ["spokane-assembly", "tacoma-fabrication"],
+    "equipment_types": ["conveyor", "motor", "pump"],
+    "summary": "ISO 10816 Zone A (new): <1.8 mm/s RMS. Zone B (acceptable): 1.8–4.5 mm/s. Zone C (alert — schedule maintenance): 4.5–7.1 mm/s. Zone D (danger — stop machine): >7.1 mm/s. Readings taken weekly on critical assets, monthly on standard assets.",
+    "thresholds": {
+      "zone_a_max_mm_s": 1.8,
+      "zone_b_max_mm_s": 4.5,
+      "zone_c_max_mm_s": 7.1
+    },
+    "reference": "ISO-10816 / PRED-MAINT-2023-09",
+    "last_revised": "2023-09-20"
+  },
+  {
+    "id": "STD-011",
+    "title": "Supplier PPAP Requirements — Level 3",
+    "plant_ids": ["spokane-assembly", "tacoma-fabrication"],
+    "summary": "New supplier or changed part requires PPAP Level 3: design records, PFMEA, control plan, MSA study (Gage R&R <10% for critical dims), initial capability study (Cpk ≥1.67 for critical, ≥1.33 for major), sample parts (5 per cavity). Conditional approval allowed for Cpk 1.33–1.67 with 100% inspection. Cpk <1.33 = rejection.",
+    "thresholds": {
+      "cpk_approval_threshold": 1.67,
+      "cpk_conditional_min": 1.33,
+      "gage_rr_max_pct": 10,
+      "ppap_sample_count": 5
+    },
+    "reference": "QMS-PPAP-2024-02",
+    "last_revised": "2024-02-15"
+  },
+  {
+    "id": "STD-012",
+    "title": "Bend Packaging — Seal Integrity Standard",
+    "plant_ids": ["bend-packaging"],
+    "line_ids": ["BPK-LINE-1", "BPK-LINE-2", "BPK-LINE-3"],
+    "summary": "Heat-seal bars must maintain 140–160°C. Dwell time 1.5–2.5 s. Seal peel strength ≥12 N/15mm (hot-tack) and ≥18 N/15mm (cooled). Visual inspection every 30 min; destructive peel test every 2 h. Seal failure rate >0.5% triggers line stop and root-cause analysis.",
+    "thresholds": {
+      "seal_temp_min_c": 140,
+      "seal_temp_max_c": 160,
+      "dwell_time_min_s": 1.5,
+      "dwell_time_max_s": 2.5,
+      "peel_strength_hot_N_15mm": 12,
+      "peel_strength_cooled_N_15mm": 18,
+      "seal_failure_rate_pct_stop": 0.5
+    },
+    "reference": "PKG-SEAL-BND-2024-04",
+    "last_revised": "2024-04-01"
+  },
+  {
+    "id": "STD-013",
+    "title": "Material Handling — FIFO and Traceability",
+    "plant_ids": ["spokane-assembly", "tacoma-fabrication", "bend-packaging"],
+    "summary": "First-in, first-out required for all raw materials and WIP. Each pallet/container must carry a lot traveler with supplier lot number, receipt date, inspection status, and PO number. Any material without a traveler is HOLD pending investigation. Age-out: raw material >90 days requires QA re-inspection.",
+    "reference": "OPS-TRACE-2023-12",
+    "last_revised": "2023-12-01"
+  },
+  {
+    "id": "STD-014",
+    "title": "Emergency Response — Spill and Chemical Release",
+    "plant_ids": ["spokane-assembly", "tacoma-fabrication", "bend-packaging"],
+    "summary": "Any uncontrolled chemical release: (1) stop work immediately, (2) evacuate 10-meter radius, (3) notify shift supervisor and EHS within 5 minutes, (4) do not re-enter until EHS clears. Reportable quantities per 40 CFR Part 302. Chlorine >1 ppm in work area triggers mandatory evacuation.",
+    "thresholds": {
+      "chlorine_ppm_evacuation": 1.0,
+      "notification_window_minutes": 5
+    },
+    "reference": "EHS-EMRG-2023-07",
+    "last_revised": "2023-07-15"
+  },
+  {
+    "id": "STD-015",
+    "title": "Quality Hold and Disposition Procedure",
+    "plant_ids": ["spokane-assembly", "tacoma-fabrication", "bend-packaging"],
+    "summary": "Quality hold triggers: Cpk <1.0, defect rate >2%, customer complaint, process excursion outside control limits. Held material: segregated, tagged RED HOLD, logged in QMS. Disposition options: use-as-is (customer concession required), rework, scrap. Disposition must be completed within 48 h of hold initiation.",
+    "thresholds": {
+      "cpk_hold_threshold": 1.0,
+      "defect_rate_hold_pct": 2.0,
+      "disposition_window_hours": 48
+    },
+    "reference": "QMS-HOLD-2024-01",
+    "last_revised": "2024-01-10"
+  }
+]

@@ -1,0 +1,239 @@
+{
+  "defect_categories": [
+    {
+      "id": "QT-BEARING-VIB",
+      "plant_ids": ["spokane-assembly", "tacoma-fabrication"],
+      "category": "Equipment — Bearing Vibration",
+      "description": "Excessive vibration on conveyor or press bearings",
+      "measurement": "RMS velocity (mm/s)",
+      "thresholds": {
+        "zone_a_max": 1.8,
+        "zone_b_max": 4.5,
+        "zone_c_max": 7.1,
+        "zone_d_above": 7.1
+      },
+      "actions": {
+        "zone_b": "Schedule maintenance within 2 weeks",
+        "zone_c": "Schedule maintenance this shift",
+        "zone_d": "Stop machine immediately"
+      },
+      "standard_ref": "STD-010",
+      "cpk_applicable": false
+    },
+    {
+      "id": "QT-BURR-HEIGHT",
+      "plant_ids": ["spokane-assembly", "tacoma-fabrication"],
+      "line_ids": ["SAP-LINE-A", "SAP-LINE-B", "TFB-LINE-1", "TFB-LINE-2", "TFB-LINE-3"],
+      "category": "Dimensional — Burr Height",
+      "description": "Burr height on stamped/formed parts",
+      "measurement": "mm",
+      "thresholds": {
+        "spec_max_mm": 0.1,
+        "hold_trigger_mm": 0.12
+      },
+      "cpk_target": 1.67,
+      "cpk_hold": 1.0,
+      "standard_ref": "STD-009",
+      "typical_root_causes": ["die clearance wrong", "die wear", "die temp", "material hardness variation"]
+    },
+    {
+      "id": "QT-SEAL-PEEL",
+      "plant_ids": ["bend-packaging"],
+      "line_ids": ["BPK-LINE-1", "BPK-LINE-2", "BPK-LINE-3"],
+      "category": "Seal — Peel Strength",
+      "description": "Heat seal peel strength (hot-tack and cooled)",
+      "measurement": "N/15mm",
+      "thresholds": {
+        "hot_tack_min_N": 12,
+        "cooled_min_N": 18,
+        "failure_rate_stop_pct": 0.5
+      },
+      "cpk_target": 1.33,
+      "cpk_hold": 1.0,
+      "standard_ref": "STD-012",
+      "typical_root_causes": ["seal bar temp low", "dwell time short", "thermocouple drift", "SSR failure", "material variation"]
+    },
+    {
+      "id": "QT-ATP-SWAB",
+      "plant_ids": ["bend-packaging"],
+      "line_ids": ["BPK-LINE-1", "BPK-LINE-2", "BPK-LINE-3"],
+      "category": "Sanitation — ATP Swab",
+      "description": "ATP bioluminescence swab of food-contact surfaces",
+      "measurement": "RLU (Relative Light Units)",
+      "thresholds": {
+        "pass_max_rlu": 100,
+        "fail_rlu": 101
+      },
+      "standard_ref": "STD-004",
+      "typical_root_causes": ["sanitation skipped", "sanitation steps incomplete", "product residue", "improper sanitizer dilution"]
+    },
+    {
+      "id": "QT-BORE-DIM",
+      "plant_ids": ["spokane-assembly"],
+      "line_ids": ["SAP-LINE-C"],
+      "category": "Dimensional — Bore Diameter (Jenner Valve parts)",
+      "description": "Bore diameter on supplier-provided valve components",
+      "measurement": "mm deviation from nominal",
+      "thresholds": {
+        "tolerance_mm": 0.05,
+        "cpk_approval": 1.67,
+        "cpk_conditional": 1.33,
+        "cpk_rejection": 1.33
+      },
+      "cpk_target": 1.67,
+      "cpk_hold": 1.0,
+      "standard_ref": "STD-011",
+      "supplier_id": "SUP-JV",
+      "typical_root_causes": ["tool wear", "machine change without notification", "SPC not implemented"]
+    },
+    {
+      "id": "QT-THROUGHPUT",
+      "plant_ids": ["spokane-assembly", "tacoma-fabrication", "bend-packaging"],
+      "category": "Throughput — Production Rate",
+      "description": "Actual vs. baseline production rate",
+      "measurement": "% deviation from shift baseline",
+      "thresholds": {
+        "alert_pct": 10,
+        "alert_duration_min": 15,
+        "escalation_pct": 20,
+        "escalation_duration_min": 30
+      },
+      "standard_ref": "STD-008",
+      "typical_root_causes": ["equipment failure", "jam", "material shortage", "quality hold", "staffing"]
+    },
+    {
+      "id": "QT-SURFACE-FINISH",
+      "plant_ids": ["tacoma-fabrication"],
+      "category": "Dimensional — Surface Finish",
+      "description": "Ra surface roughness on machined surfaces",
+      "measurement": "Ra (µm)",
+      "thresholds": {
+        "spec_max_ra": 1.6,
+        "hold_trigger_ra": 2.0
+      },
+      "cpk_target": 1.33,
+      "cpk_hold": 1.0,
+      "standard_ref": "STD-006",
+      "typical_root_causes": ["tool wear", "coolant pressure low", "feed rate too high", "material variation"]
+    },
+    {
+      "id": "QT-SEAL-TEMP",
+      "plant_ids": ["bend-packaging"],
+      "line_ids": ["BPK-LINE-1", "BPK-LINE-2", "BPK-LINE-3"],
+      "category": "Process Parameter — Seal Bar Temperature",
+      "description": "Operating temperature of heat seal bars",
+      "measurement": "°C",
+      "thresholds": {
+        "min_c": 140,
+        "setpoint_c": 150,
+        "max_c": 160,
+        "critical_low_c": 135,
+        "critical_high_c": 170
+      },
+      "standard_ref": "STD-012",
+      "typical_root_causes": ["thermocouple drift", "SSR failure", "heater element failure", "setpoint error post-changeover"]
+    },
+    {
+      "id": "QT-FLATNESS",
+      "plant_ids": ["tacoma-fabrication"],
+      "line_ids": ["TFB-LINE-2"],
+      "category": "Dimensional — Part Flatness",
+      "description": "Flatness of stamped parts from Press P-4",
+      "measurement": "mm deviation",
+      "thresholds": {
+        "spec_max_mm": 0.15,
+        "hold_trigger_mm": 0.18
+      },
+      "cpk_target": 1.33,
+      "cpk_hold": 1.0,
+      "standard_ref": "STD-009",
+      "typical_root_causes": ["die temperature", "ambient temp", "material springback", "die wear"]
+    },
+    {
+      "id": "QT-WALL-THICKNESS",
+      "plant_ids": ["spokane-assembly"],
+      "line_ids": ["SAP-LINE-B"],
+      "category": "Dimensional — Wall Thickness (Performa Metals)",
+      "description": "Wall thickness on formed metal components",
+      "measurement": "mm deviation from nominal",
+      "thresholds": {
+        "tolerance_mm": 0.05,
+        "aql_level": 1.0
+      },
+      "standard_ref": "STD-005",
+      "supplier_id": "SUP-PM",
+      "typical_root_causes": ["tool wear", "feed rate", "material thickness variation"]
+    }
+  ],
+  "plants": [
+    {
+      "plant_id": "spokane-assembly",
+      "name": "Spokane Assembly",
+      "location": "Spokane, WA",
+      "lines": [
+        { "line_id": "SAP-LINE-A", "name": "Line A — Stamping & Assembly", "baseline_throughput_units_hr": 480 },
+        { "line_id": "SAP-LINE-B", "name": "Line B — Assembly & Weld", "baseline_throughput_units_hr": 360 },
+        { "line_id": "SAP-LINE-C", "name": "Line C — Valve Sub-Assembly", "baseline_throughput_units_hr": 240 }
+      ]
+    },
+    {
+      "plant_id": "tacoma-fabrication",
+      "name": "Tacoma Fabrication",
+      "location": "Tacoma, WA",
+      "lines": [
+        { "line_id": "TFB-LINE-1", "name": "Line 1 — Heavy Press", "baseline_throughput_units_hr": 300 },
+        { "line_id": "TFB-LINE-2", "name": "Line 2 — Precision Stamping", "baseline_throughput_units_hr": 420 },
+        { "line_id": "TFB-LINE-3", "name": "Line 3 — Rod & Bar", "baseline_throughput_units_hr": 200 },
+        { "line_id": "TFB-LINE-B", "name": "Line B — Conveyor Assembly Feed", "baseline_throughput_units_hr": 540 }
+      ]
+    },
+    {
+      "plant_id": "bend-packaging",
+      "name": "Bend Packaging",
+      "location": "Bend, OR",
+      "lines": [
+        { "line_id": "BPK-LINE-1", "name": "Line 1 — Primary Packaging", "baseline_throughput_units_hr": 1200 },
+        { "line_id": "BPK-LINE-2", "name": "Line 2 — Primary Packaging", "baseline_throughput_units_hr": 1200 },
+        { "line_id": "BPK-LINE-3", "name": "Line 3 — Secondary Packaging", "baseline_throughput_units_hr": 800 }
+      ]
+    }
+  ],
+  "suppliers": [
+    {
+      "supplier_id": "SUP-JV",
+      "name": "Jenner Valve",
+      "parts_supplied": ["valve components", "bore diameter critical parts"],
+      "plants": ["spokane-assembly"],
+      "scar_count_12mo": 4,
+      "current_status": "Controlled Shipping Level 2",
+      "notes": "Recurring Cpk failures on bore diameter. Supplier audit completed Q4 2024. SPC not implemented. Quality tech vacancy."
+    },
+    {
+      "supplier_id": "SUP-PM",
+      "name": "Performa Metals",
+      "parts_supplied": ["formed metal components", "wall thickness critical parts"],
+      "plants": ["spokane-assembly"],
+      "scar_count_12mo": 1,
+      "current_status": "Conditional — 100% incoming inspection on next 2 lots",
+      "notes": "First SCAR for tool wear issue. Committed to SPC within 30 days."
+    },
+    {
+      "supplier_id": "SUP-DM",
+      "name": "DuraMet Industries",
+      "parts_supplied": ["rod stock", "bar stock", "alternative valve components"],
+      "plants": ["spokane-assembly", "tacoma-fabrication"],
+      "scar_count_12mo": 1,
+      "current_status": "Conditional — 100% incoming inspection on next 2 lots (lot 009 only)",
+      "notes": "Backup supplier for Jenner Valve. One SCAR for lot 009 (grinding calibration issue at high volume). Other lots unaffected."
+    },
+    {
+      "supplier_id": "SUP-TB",
+      "name": "TechBearings Inc.",
+      "parts_supplied": ["conveyor bearings (non-OEM equivalent)"],
+      "plants": ["tacoma-fabrication", "spokane-assembly"],
+      "scar_count_12mo": 1,
+      "current_status": "Disqualified — do not use",
+      "notes": "Non-OEM bearing lot TB-2024-001 caused multiple bearing failures (INC-2024-003, INC-2024-011, INC-2025-006). Lot fully eliminated from inventory. Supplier disqualified pending corrective action."
+    }
+  ]
+}

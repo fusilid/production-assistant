@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Production Issue Resolution Assistant — Solution Overview</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #0a0e1a;
+      color: #e2e8f0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .slide {
+      width: 1280px;
+      min-height: 720px;
+      background: linear-gradient(145deg, #0f172a 0%, #0d1424 60%, #0f172a 100%);
+      border: 1px solid #1e293b;
+      border-radius: 16px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      overflow: hidden;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+      position: relative;
+    }
+
+    /* Subtle grid overlay */
+    .slide::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(59,130,246,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59,130,246,0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+    }
+
+    /* ── Header ── */
+    header {
+      padding: 32px 48px 24px;
+      border-bottom: 1px solid #1e293b;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      position: relative;
+      z-index: 1;
+    }
+
+    .title-block h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: #f8fafc;
+      letter-spacing: -0.5px;
+    }
+
+    .title-block .subtitle {
+      font-size: 13px;
+      color: #64748b;
+      margin-top: 4px;
+      letter-spacing: 0.4px;
+    }
+
+    .badge-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: flex-end;
+    }
+
+    .badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 999px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .badge-blue   { background: rgba(59,130,246,0.15); color: #93c5fd; border: 1px solid rgba(59,130,246,0.3); }
+    .badge-purple { background: rgba(168,85,247,0.15); color: #d8b4fe; border: 1px solid rgba(168,85,247,0.3); }
+    .badge-green  { background: rgba(34,197,94,0.12);  color: #86efac; border: 1px solid rgba(34,197,94,0.25); }
+
+    /* ── Body ── */
+    .body {
+      padding: 28px 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Cards ── */
+    .card {
+      background: rgba(15,23,42,0.7);
+      border: 1px solid #1e293b;
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .icon-red    { background: rgba(239,68,68,0.15);  border: 1px solid rgba(239,68,68,0.25); }
+    .icon-blue   { background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.25); }
+    .icon-amber  { background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.25); }
+    .icon-purple { background: rgba(168,85,247,0.15); border: 1px solid rgba(168,85,247,0.25); }
+    .icon-green  { background: rgba(34,197,94,0.12);  border: 1px solid rgba(34,197,94,0.25); }
+    .icon-cyan   { background: rgba(6,182,212,0.12);  border: 1px solid rgba(6,182,212,0.25); }
+
+    .card-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #cbd5e1;
+      letter-spacing: 0.3px;
+    }
+
+    .card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .card ul li {
+      font-size: 12px;
+      color: #94a3b8;
+      padding-left: 14px;
+      position: relative;
+      line-height: 1.5;
+    }
+
+    .card ul li::before {
+      content: '›';
+      position: absolute;
+      left: 0;
+      color: #475569;
+      font-weight: 700;
+    }
+
+    .card ul li strong {
+      color: #cbd5e1;
+      font-weight: 600;
+    }
+
+    /* ── Architecture flow ── */
+    .arch-card {
+      grid-column: 1 / -1;
+      background: rgba(15,23,42,0.7);
+      border: 1px solid #1e293b;
+      border-radius: 12px;
+      padding: 20px 24px;
+    }
+
+    .arch-flow {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-top: 14px;
+      overflow-x: auto;
+    }
+
+    .flow-step {
+      flex: 1;
+      min-width: 120px;
+      text-align: center;
+    }
+
+    .flow-box {
+      background: rgba(30,41,59,0.8);
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 10px 8px;
+    }
+
+    .flow-box .step-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: #475569;
+      margin-bottom: 4px;
+    }
+
+    .flow-box .step-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: #e2e8f0;
+    }
+
+    .flow-box .step-detail {
+      font-size: 10px;
+      color: #64748b;
+      margin-top: 3px;
+    }
+
+    .flow-arrow {
+      width: 28px;
+      flex-shrink: 0;
+      text-align: center;
+      color: #334155;
+      font-size: 18px;
+      font-weight: 300;
+    }
+
+    /* safety highlight */
+    .flow-box.safety {
+      border-color: rgba(239,68,68,0.4);
+      background: rgba(239,68,68,0.06);
+    }
+    .flow-box.safety .step-name { color: #fca5a5; }
+
+    /* llm highlight */
+    .flow-box.llm {
+      border-color: rgba(168,85,247,0.4);
+      background: rgba(168,85,247,0.06);
+    }
+    .flow-box.llm .step-name { color: #d8b4fe; }
+
+    /* ── Highlight row ── */
+    .highlight-row {
+      display: flex;
+      gap: 12px;
+      grid-column: 1 / -1;
+    }
+
+    .highlight-pill {
+      flex: 1;
+      background: rgba(30,41,59,0.5);
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .highlight-pill .pill-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: #475569;
+    }
+
+    .highlight-pill .pill-value {
+      font-size: 22px;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .highlight-pill .pill-desc {
+      font-size: 11px;
+      color: #64748b;
+    }
+
+    .val-red    { color: #f87171; }
+    .val-blue   { color: #60a5fa; }
+    .val-amber  { color: #fbbf24; }
+    .val-purple { color: #c084fc; }
+    .val-green  { color: #4ade80; }
+
+    /* ── Footer ── */
+    footer {
+      padding: 14px 48px;
+      border-top: 1px solid #1e293b;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-left {
+      font-size: 11px;
+      color: #475569;
+    }
+
+    .footer-right {
+      display: flex;
+      gap: 20px;
+    }
+
+    .tech-tag {
+      font-size: 11px;
+      color: #475569;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .tech-tag .dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #334155;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide">
+
+    <!-- ── Header ── -->
+    <header>
+      <div class="title-block">
+        <h1>Production Issue Resolution Assistant</h1>
+        <div class="subtitle">AI-assisted decision support for manufacturing shift managers · Spokane · Tacoma · Bend</div>
+      </div>
+      <div class="badge-row">
+        <span class="badge badge-red" style="background:rgba(239,68,68,0.12);color:#fca5a5;border:1px solid rgba(239,68,68,0.25);">Safety First</span>
+        <span class="badge badge-blue">RAG Context</span>
+        <span class="badge badge-purple">Claude Sonnet</span>
+        <span class="badge badge-green">Next.js 16</span>
+      </div>
+    </header>
+
+    <!-- ── Body ── -->
+    <div class="body">
+
+      <!-- Metrics row -->
+      <div class="highlight-row">
+
+        <div class="highlight-pill">
+          <span class="pill-label">Response Time</span>
+          <span class="pill-value val-blue">&lt; 10s</span>
+          <span class="pill-desc">Full analysis with evidence citations</span>
+        </div>
+
+        <div class="highlight-pill">
+          <span class="pill-label">Hypotheses</span>
+          <span class="pill-value val-purple">2 – 4</span>
+          <span class="pill-desc">Ranked by confidence, never a single verdict</span>
+        </div>
+
+        <div class="highlight-pill">
+          <span class="pill-label">Action Buckets</span>
+          <span class="pill-value val-amber">3</span>
+          <span class="pill-desc">Stabilize · Investigate · Prevent Recurrence</span>
+        </div>
+
+        <div class="highlight-pill">
+          <span class="pill-label">Safety Classifier</span>
+          <span class="pill-value val-red">16</span>
+          <span class="pill-desc">Deterministic hazard categories, overrides LLM</span>
+        </div>
+
+        <div class="highlight-pill">
+          <span class="pill-label">Context Sources</span>
+          <span class="pill-value val-green">4</span>
+          <span class="pill-desc">Standards · Incidents · Maintenance · Quality</span>
+        </div>
+
+      </div>
+
+      <!-- Architecture flow -->
+      <div class="arch-card">
+        <div class="card-header">
+          <div class="icon icon-blue">⚙</div>
+          <span class="card-title">Request Pipeline</span>
+        </div>
+        <div class="arch-flow">
+
+          <div class="flow-step">
+            <div class="flow-box">
+              <div class="step-label">Browser</div>
+              <div class="step-name">Incident Form</div>
+              <div class="step-detail">Plant · Line · Timeframe · Logs</div>
+            </div>
+          </div>
+
+          <div class="flow-arrow">›</div>
+
+          <div class="flow-step">
+            <div class="flow-box safety">
+              <div class="step-label">Server — Step 1</div>
+              <div class="step-name">Safety Classifier</div>
+              <div class="step-detail">Keyword scan · 16 hazard categories</div>
+            </div>
+          </div>
+
+          <div class="flow-arrow">›</div>
+
+          <div class="flow-step">
+            <div class="flow-box">
+              <div class="step-label">Server — Step 2</div>
+              <div class="step-name">Context Retrieval</div>
+              <div class="step-detail">Standards · Incidents · Maintenance · Quality</div>
+            </div>
+          </div>
+
+          <div class="flow-arrow">›</div>
+
+          <div class="flow-step">
+            <div class="flow-box llm">
+              <div class="step-label">Server — Step 3</div>
+              <div class="step-name">Claude Sonnet</div>
+              <div class="step-detail">Prompt + context → structured JSON</div>
+            </div>
+          </div>
+
+          <div class="flow-arrow">›</div>
+
+          <div class="flow-step">
+            <div class="flow-box">
+              <div class="step-label">Server — Step 4</div>
+              <div class="step-name">Schema Validation</div>
+              <div class="step-detail">Zod · Safety flag override</div>
+            </div>
+          </div>
+
+          <div class="flow-arrow">›</div>
+
+          <div class="flow-step">
+            <div class="flow-box">
+              <div class="step-label">Browser</div>
+              <div class="step-name">Analysis Panel</div>
+              <div class="step-detail">Hypotheses · Actions · Drafts</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Card 1: Problem -->
+      <div class="card">
+        <div class="card-header">
+          <div class="icon icon-red">⚠</div>
+          <span class="card-title">The Problem</span>
+        </div>
+        <ul>
+          <li>Shift managers handle <strong>multiple lines</strong> under time pressure</li>
+          <li>Critical decisions needed in <strong>under 10 minutes</strong></li>
+          <li>Historical incidents & standards spread across <strong>disparate systems</strong></li>
+          <li>Missed safety signals lead to <strong>personnel risk</strong></li>
+          <li>Tribal knowledge lost at <strong>shift handoff</strong></li>
+        </ul>
+      </div>
+
+      <!-- Card 2: Safety Design -->
+      <div class="card">
+        <div class="card-header">
+          <div class="icon icon-red">🛡</div>
+          <span class="card-title">Safety-First Architecture</span>
+        </div>
+        <ul>
+          <li><strong>Deterministic classifier</strong> runs before LLM — cannot be bypassed</li>
+          <li>Covers injury, fire, gas leak, arc flash, <strong>LOTO, confined space</strong>, explosion, entrapment & more</li>
+          <li>Triggered flag <strong>overrides</strong> any model output after the fact</li>
+          <li>Safety actions <strong>lead the Stabilize bucket</strong> when triggered</li>
+          <li>EHS lead automatically assigned as action owner</li>
+        </ul>
+      </div>
+
+      <!-- Card 3: AI Design -->
+      <div class="card">
+        <div class="card-header">
+          <div class="icon icon-purple">✦</div>
+          <span class="card-title">Responsible AI Design</span>
+        </div>
+        <ul>
+          <li><strong>Hypotheses, not verdicts</strong> — 2–4 ranked candidates with confidence</li>
+          <li>Every claim must <strong>cite a source_id</strong> from retrieved context</li>
+          <li>LLM output validated against <strong>Zod schema</strong> before serving</li>
+          <li>API key stays <strong>server-side only</strong> — never sent to browser</li>
+          <li>Structured JSON output — <strong>no free-form hallucination risk</strong></li>
+        </ul>
+      </div>
+
+      <!-- Card 4: Context Sources -->
+      <div class="card">
+        <div class="card-header">
+          <div class="icon icon-blue">◈</div>
+          <span class="card-title">Context Retrieval (RAG)</span>
+        </div>
+        <ul>
+          <li><strong>Process Standards</strong> — SOPs, thresholds, compliance refs</li>
+          <li><strong>Prior Incidents</strong> — same line first, then same plant (max 8)</li>
+          <li><strong>Maintenance Records</strong> — work orders, asset history, parts/lots</li>
+          <li><strong>Quality Thresholds</strong> — Cpk targets, measurement limits, typical root causes</li>
+          <li>All cited by <strong>source_id</strong> in LLM response</li>
+        </ul>
+      </div>
+
+      <!-- Card 5: Output -->
+      <div class="card">
+        <div class="card-header">
+          <div class="icon icon-amber">▤</div>
+          <span class="card-title">Analysis Output</span>
+        </div>
+        <ul>
+          <li><strong>Stabilize</strong> — stop-the-bleeding actions, due "now"</li>
+          <li><strong>Investigate</strong> — hypothesis-testing steps, this shift</li>
+          <li><strong>Prevent Recurrence</strong> — systemic fixes, this week</li>
+          <li>Each action has: owner role, ETA, <strong>linked evidence</strong></li>
+          <li>Draft generator: <strong>shift handoff, maintenance request, CAPA, supplier Q&A</strong></li>
+        </ul>
+      </div>
+
+      <!-- Card 6: Tech Stack -->
+      <div class="card">
+        <div class="card-header">
+          <div class="icon icon-green">⬡</div>
+          <span class="card-title">Tech Stack</span>
+        </div>
+        <ul>
+          <li><strong>Next.js 16</strong> (Turbopack) — App Router, server actions</li>
+          <li><strong>Claude Sonnet 4-5</strong> via Anthropic SDK — server-side only</li>
+          <li><strong>Zod 4</strong> — end-to-end schema validation</li>
+          <li><strong>Tailwind CSS 4</strong> + shadcn/ui — component library</li>
+          <li><strong>Vitest</strong> — unit tests for safety classifier &amp; evals</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- ── Footer ── -->
+    <footer>
+      <div class="footer-left">Production Issue Resolution Assistant · Manufacturing AI Decision Support</div>
+      <div class="footer-right">
+        <span class="tech-tag"><span class="dot"></span>All LLM calls server-side</span>
+        <span class="tech-tag"><span class="dot"></span>Deterministic safety gate</span>
+        <span class="tech-tag"><span class="dot"></span>Evidence-cited analysis</span>
+        <span class="tech-tag"><span class="dot"></span>Structured output + Zod validation</span>
+      </div>
+    </footer>
+
+  </div>
+</body>
+</html>

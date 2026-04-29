@@ -1,0 +1,484 @@
+{
+  "assets": [
+    {
+      "asset_id": "CONV-C12-TFB",
+      "name": "Conveyor C-12",
+      "plant_id": "tacoma-fabrication",
+      "line_id": "TFB-LINE-B",
+      "type": "conveyor",
+      "manufacturer": "Hytrol",
+      "model": "TA-24",
+      "install_date": "2019-06-10",
+      "criticality": "high",
+      "mtbf_days": 95,
+      "pm_schedule": [
+        { "task": "Bearing lubrication", "interval_days": 60, "standard_ref": "STD-002" },
+        { "task": "Belt tension and alignment check", "interval_days": 30, "standard_ref": "STD-001" },
+        { "task": "Vibration measurement", "interval_days": 7, "standard_ref": "STD-010" },
+        { "task": "Drive chain lubrication", "interval_days": 30 },
+        { "task": "Full bearing replacement", "interval_days": 365 }
+      ]
+    },
+    {
+      "asset_id": "CONV-C03-SAP",
+      "name": "Conveyor C-03",
+      "plant_id": "spokane-assembly",
+      "line_id": "SAP-LINE-A",
+      "type": "conveyor",
+      "manufacturer": "Hytrol",
+      "model": "TA-24",
+      "install_date": "2020-03-15",
+      "criticality": "high",
+      "pm_schedule": [
+        { "task": "Bearing lubrication", "interval_days": 90, "standard_ref": "STD-002" },
+        { "task": "Belt tension and alignment check", "interval_days": 30, "standard_ref": "STD-001" },
+        { "task": "Vibration measurement", "interval_days": 7, "standard_ref": "STD-010" }
+      ]
+    },
+    {
+      "asset_id": "CONV-C05-SAP",
+      "name": "Conveyor C-05",
+      "plant_id": "spokane-assembly",
+      "line_id": "SAP-LINE-A",
+      "type": "conveyor",
+      "manufacturer": "Hytrol",
+      "model": "TA-18",
+      "install_date": "2020-03-15",
+      "criticality": "medium",
+      "pm_schedule": [
+        { "task": "Bearing lubrication", "interval_days": 90, "standard_ref": "STD-002" },
+        { "task": "Belt tension and alignment check", "interval_days": 30, "standard_ref": "STD-001" },
+        { "task": "Vibration measurement", "interval_days": 30, "standard_ref": "STD-010" }
+      ]
+    },
+    {
+      "asset_id": "CONV-C08-SAP",
+      "name": "Conveyor C-08",
+      "plant_id": "spokane-assembly",
+      "line_id": "SAP-LINE-B",
+      "type": "conveyor",
+      "manufacturer": "Hytrol",
+      "model": "TA-24",
+      "install_date": "2021-01-20",
+      "criticality": "high",
+      "pm_schedule": [
+        { "task": "Bearing lubrication", "interval_days": 90, "standard_ref": "STD-002" },
+        { "task": "Belt tension and alignment check", "interval_days": 30, "standard_ref": "STD-001" },
+        { "task": "Vibration measurement", "interval_days": 7, "standard_ref": "STD-010" },
+        { "task": "FOD check and sprocket inspection", "interval_days": 7 }
+      ]
+    },
+    {
+      "asset_id": "CONV-CB3-BPK",
+      "name": "Conveyor CB-3",
+      "plant_id": "bend-packaging",
+      "line_id": "BPK-LINE-2",
+      "type": "conveyor",
+      "manufacturer": "Dorner",
+      "model": "2200-Series",
+      "install_date": "2022-08-01",
+      "criticality": "medium",
+      "pm_schedule": [
+        { "task": "Belt tension and alignment check", "interval_days": 14, "standard_ref": "STD-001" },
+        { "task": "Drive pulley lagging inspection", "interval_days": 90 }
+      ]
+    },
+    {
+      "asset_id": "CONV-CB5-BPK",
+      "name": "Conveyor CB-5",
+      "plant_id": "bend-packaging",
+      "line_id": "BPK-LINE-3",
+      "type": "conveyor",
+      "manufacturer": "Dorner",
+      "model": "2200-Series",
+      "install_date": "2022-08-01",
+      "criticality": "medium",
+      "pm_schedule": [
+        { "task": "Belt tension and alignment check", "interval_days": 14, "standard_ref": "STD-001" },
+        { "task": "Accumulation sensor check", "interval_days": 7 },
+        { "task": "Motor winding temperature check", "interval_days": 30 }
+      ]
+    },
+    {
+      "asset_id": "PRESS-P1-TFB",
+      "name": "Press P-1",
+      "plant_id": "tacoma-fabrication",
+      "line_id": "TFB-LINE-1",
+      "type": "press",
+      "manufacturer": "Minster",
+      "model": "P2-60",
+      "install_date": "2018-11-01",
+      "criticality": "high",
+      "pm_schedule": [
+        { "task": "Die lubrication and inspection", "interval_days": 7 },
+        { "task": "Pneumatic system check (incl. counterbalance)", "interval_days": 30, "standard_ref": "STD-007" },
+        { "task": "Slide and guide clearance check", "interval_days": 90 },
+        { "task": "Clutch and brake inspection", "interval_days": 180 }
+      ]
+    },
+    {
+      "asset_id": "PRESS-P2-SAP",
+      "name": "Press P-2",
+      "plant_id": "spokane-assembly",
+      "line_id": "SAP-LINE-A",
+      "type": "press",
+      "manufacturer": "Minster",
+      "model": "P2-45",
+      "install_date": "2019-03-10",
+      "criticality": "high",
+      "pm_schedule": [
+        { "task": "Die inspection and stripper spring check", "interval_days": 90, "standard_ref": "STD-009" },
+        { "task": "Slide lubrication", "interval_days": 30 },
+        { "task": "LOTO procedure verification", "interval_days": 365, "standard_ref": "STD-007" }
+      ]
+    },
+    {
+      "asset_id": "PRESS-P3-SAP",
+      "name": "Press P-3",
+      "plant_id": "spokane-assembly",
+      "line_id": "SAP-LINE-A",
+      "type": "press",
+      "manufacturer": "Minster",
+      "model": "P2-60",
+      "install_date": "2019-03-10",
+      "criticality": "high",
+      "pm_schedule": [
+        { "task": "Die clearance verification", "interval_days": 30, "standard_ref": "STD-009" },
+        { "task": "Slide lubrication", "interval_days": 30 },
+        { "task": "First-article inspection log review", "interval_days": 7 }
+      ]
+    },
+    {
+      "asset_id": "PRESS-P4-TFB",
+      "name": "Press P-4",
+      "plant_id": "tacoma-fabrication",
+      "line_id": "TFB-LINE-2",
+      "type": "press",
+      "manufacturer": "Minster",
+      "model": "P2-60",
+      "install_date": "2020-05-20",
+      "criticality": "high",
+      "pm_schedule": [
+        { "task": "Die temperature log review", "interval_days": 1 },
+        { "task": "Die lubrication and inspection", "interval_days": 7 },
+        { "task": "SPC chart review", "interval_days": 1, "standard_ref": "STD-006" }
+      ]
+    },
+    {
+      "asset_id": "SEAL-SB1-BPK",
+      "name": "Seal Bar SB-1",
+      "plant_id": "bend-packaging",
+      "line_id": "BPK-LINE-1",
+      "type": "seal-bar",
+      "manufacturer": "Pakmax",
+      "model": "HB-150",
+      "install_date": "2021-06-01",
+      "criticality": "high",
+      "pm_schedule": [
+        { "task": "Thermocouple calibration", "interval_days": 180, "standard_ref": "STD-012" },
+        { "task": "SSR functional test", "interval_days": 365 },
+        { "task": "High-limit cutout verification", "interval_days": 90 },
+        { "task": "Seal jaw surface inspection", "interval_days": 30 }
+      ]
+    },
+    {
+      "asset_id": "SEAL-SB2-BPK",
+      "name": "Seal Bar SB-2",
+      "plant_id": "bend-packaging",
+      "line_id": "BPK-LINE-1",
+      "type": "seal-bar",
+      "manufacturer": "Pakmax",
+      "model": "HB-150",
+      "install_date": "2021-06-01",
+      "criticality": "high",
+      "pm_schedule": [
+        { "task": "Thermocouple calibration", "interval_days": 180, "standard_ref": "STD-012" },
+        { "task": "SSR functional test", "interval_days": 365 },
+        { "task": "High-limit cutout verification", "interval_days": 90 }
+      ]
+    },
+    {
+      "asset_id": "SEAL-SB3-BPK",
+      "name": "Seal Bar SB-3",
+      "plant_id": "bend-packaging",
+      "line_id": "BPK-LINE-3",
+      "type": "seal-bar",
+      "manufacturer": "Pakmax",
+      "model": "HB-150",
+      "install_date": "2022-01-10",
+      "criticality": "high",
+      "pm_schedule": [
+        { "task": "Thermocouple calibration", "interval_days": 180, "standard_ref": "STD-012" },
+        { "task": "SSR functional test", "interval_days": 365 },
+        { "task": "High-limit cutout verification", "interval_days": 90 }
+      ]
+    }
+  ],
+  "work_orders": [
+    {
+      "wo_id": "WO-7821",
+      "asset_id": "CONV-C12-TFB",
+      "plant_id": "tacoma-fabrication",
+      "line_id": "TFB-LINE-B",
+      "type": "PM",
+      "description": "Bearing lubrication — 90-day cycle",
+      "status": "completed",
+      "scheduled_date": "2023-12-15",
+      "completed_date": "2024-01-07",
+      "technician": "M. Okafor",
+      "notes": "PM overdue 23 days. Grease fitting on drive-side blocked — suspected grease fitting failure. Injected grease from secondary port. Flagged for bearing inspection at next opportunity.",
+      "parts_used": []
+    },
+    {
+      "wo_id": "WO-7889",
+      "asset_id": "CONV-C12-TFB",
+      "plant_id": "tacoma-fabrication",
+      "line_id": "TFB-LINE-B",
+      "type": "CM",
+      "description": "Emergency bearing replacement — INC-2024-001",
+      "status": "completed",
+      "scheduled_date": "2024-01-08",
+      "completed_date": "2024-01-08",
+      "technician": "M. Okafor",
+      "notes": "Replaced SKF 6205-2RS drive-side and idler-side bearings. Cleared grease fitting. Bearing sourced from distributor stock — non-OEM equivalent. MTBF reset.",
+      "parts_used": [
+        { "part_no": "SKF-6205-2RS-EQUIV", "qty": 2, "supplier": "TechBearings Inc.", "lot": "TB-2024-001" }
+      ]
+    },
+    {
+      "wo_id": "WO-8102",
+      "asset_id": "CONV-C12-TFB",
+      "plant_id": "tacoma-fabrication",
+      "line_id": "TFB-LINE-B",
+      "type": "CM",
+      "description": "Proactive bearing replacement — INC-2024-002",
+      "status": "completed",
+      "scheduled_date": "2024-03-14",
+      "completed_date": "2024-03-14",
+      "technician": "D. Rivera",
+      "notes": "Proactive replacement based on vibration reading 5.2 mm/s. PM interval corrected in CMMS to 60 days.",
+      "parts_used": [
+        { "part_no": "SKF-6205-2RS-EQUIV", "qty": 2, "supplier": "TechBearings Inc.", "lot": "TB-2024-001" }
+      ]
+    },
+    {
+      "wo_id": "WO-8341",
+      "asset_id": "CONV-C12-TFB",
+      "plant_id": "tacoma-fabrication",
+      "line_id": "TFB-LINE-B",
+      "type": "CM",
+      "description": "Bearing seizure and belt replacement — INC-2024-003",
+      "status": "completed",
+      "scheduled_date": "2024-06-22",
+      "completed_date": "2024-06-22",
+      "technician": "M. Okafor",
+      "notes": "Full seizure drive-side bearing. Belt section frayed — replaced 3m section. Root cause: non-OEM bearing lot TB-2024-001 suspected. OEM SKF part installed this time.",
+      "parts_used": [
+        { "part_no": "SKF-6205-2RS", "qty": 2, "supplier": "SKF Authorized Distributor", "lot": "SKF-A-2024-044" },
+        { "part_no": "BELT-TA24-3M", "qty": 1, "supplier": "Hytrol", "lot": "HY-2024-188" }
+      ]
+    },
+    {
+      "wo_id": "WO-8821",
+      "asset_id": "CONV-C12-TFB",
+      "plant_id": "tacoma-fabrication",
+      "line_id": "TFB-LINE-B",
+      "type": "PM",
+      "description": "Bearing lubrication — 60-day PM",
+      "status": "completed",
+      "scheduled_date": "2024-08-22",
+      "completed_date": "2024-08-23",
+      "technician": "D. Rivera",
+      "notes": "PM completed. Vibration measured at 1.9 mm/s RMS — Zone A/B boundary. Within tolerance. Grease fitting clear and functional.",
+      "parts_used": []
+    },
+    {
+      "wo_id": "WO-9015",
+      "asset_id": "CONV-C12-TFB",
+      "plant_id": "tacoma-fabrication",
+      "line_id": "TFB-LINE-B",
+      "type": "PM",
+      "description": "Vibration measurement — weekly check",
+      "status": "completed",
+      "scheduled_date": "2024-11-18",
+      "completed_date": "2024-11-18",
+      "technician": "D. Rivera",
+      "notes": "Vibration 2.4 mm/s RMS. Zone B, acceptable. No abnormalities noted.",
+      "parts_used": []
+    },
+    {
+      "wo_id": "WO-9187",
+      "asset_id": "CONV-C12-TFB",
+      "plant_id": "tacoma-fabrication",
+      "line_id": "TFB-LINE-B",
+      "type": "PM",
+      "description": "Bearing lubrication — 60-day PM",
+      "status": "completed",
+      "scheduled_date": "2024-10-23",
+      "completed_date": "2024-10-25",
+      "technician": "M. Okafor",
+      "notes": "PM completed 2 days late (tech was on leave). Vibration at time of PM: 2.1 mm/s RMS. Grease applied.",
+      "parts_used": []
+    },
+    {
+      "wo_id": "WO-9402",
+      "asset_id": "CONV-C12-TFB",
+      "plant_id": "tacoma-fabrication",
+      "line_id": "TFB-LINE-B",
+      "type": "PM",
+      "description": "Bearing lubrication — 60-day PM",
+      "status": "overdue",
+      "scheduled_date": "2024-12-25",
+      "completed_date": null,
+      "technician": null,
+      "notes": "Due during holiday shutdown. Deferred to first week January 2025. Not yet rescheduled.",
+      "parts_used": []
+    },
+    {
+      "wo_id": "WO-9455",
+      "asset_id": "CONV-C03-SAP",
+      "plant_id": "spokane-assembly",
+      "line_id": "SAP-LINE-A",
+      "type": "CM",
+      "description": "Bearing replacement — vibration event INC-2024-011",
+      "status": "completed",
+      "scheduled_date": "2024-08-20",
+      "completed_date": "2024-08-20",
+      "technician": "R. Patel",
+      "notes": "OEM SKF 6205-2RS installed. Prior bearing from lot TB-2024-001 (non-OEM). Vibration post-install: 1.2 mm/s RMS.",
+      "parts_used": [
+        { "part_no": "SKF-6205-2RS", "qty": 2, "supplier": "SKF Authorized Distributor", "lot": "SKF-A-2024-089" }
+      ]
+    },
+    {
+      "wo_id": "WO-9501",
+      "asset_id": "CONV-C08-SAP",
+      "plant_id": "spokane-assembly",
+      "line_id": "SAP-LINE-B",
+      "type": "PM",
+      "description": "Bearing lubrication and FOD check",
+      "status": "completed",
+      "scheduled_date": "2025-04-15",
+      "completed_date": "2025-04-16",
+      "technician": "R. Patel",
+      "notes": "PM completed 1 day late. Belt tension at 165 N/m — within spec. No FOD found. Vibration 1.6 mm/s RMS (Zone A). Drive chain lubricated.",
+      "parts_used": []
+    },
+    {
+      "wo_id": "WO-9544",
+      "asset_id": "CONV-C08-SAP",
+      "plant_id": "spokane-assembly",
+      "line_id": "SAP-LINE-B",
+      "type": "PM",
+      "description": "Belt tension and alignment check",
+      "status": "completed",
+      "scheduled_date": "2025-03-16",
+      "completed_date": "2025-03-17",
+      "technician": "R. Patel",
+      "notes": "Belt tension 158 N/m. Alignment within 3 mm. No adjustment needed.",
+      "parts_used": []
+    },
+    {
+      "wo_id": "WO-9601",
+      "asset_id": "SEAL-SB1-BPK",
+      "plant_id": "bend-packaging",
+      "line_id": "BPK-LINE-1",
+      "type": "CM",
+      "description": "Thermocouple replacement — INC-2024-006",
+      "status": "completed",
+      "scheduled_date": "2024-04-11",
+      "completed_date": "2024-04-11",
+      "technician": "L. Santos",
+      "notes": "Thermocouple type-K replaced and calibrated. New calibration cert: CAL-SB1-TC-2024-04. Next calibration due 2024-10-11.",
+      "parts_used": [
+        { "part_no": "TC-K-HB150", "qty": 1, "supplier": "Pakmax", "lot": "PMX-2024-017" }
+      ]
+    },
+    {
+      "wo_id": "WO-9700",
+      "asset_id": "SEAL-SB1-BPK",
+      "plant_id": "bend-packaging",
+      "line_id": "BPK-LINE-1",
+      "type": "PM",
+      "description": "Thermocouple calibration — 6-month PM",
+      "status": "completed",
+      "scheduled_date": "2024-10-11",
+      "completed_date": "2024-10-14",
+      "technician": "L. Santos",
+      "notes": "Calibration verified — thermocouple within ±1°C of reference. Seal jaw inspected — no wear. Next calibration due 2025-04-14.",
+      "parts_used": []
+    },
+    {
+      "wo_id": "WO-9788",
+      "asset_id": "SEAL-SB1-BPK",
+      "plant_id": "bend-packaging",
+      "line_id": "BPK-LINE-1",
+      "type": "PM",
+      "description": "Thermocouple calibration — 6-month PM",
+      "status": "overdue",
+      "scheduled_date": "2025-04-14",
+      "completed_date": null,
+      "technician": null,
+      "notes": "Due 2025-04-14, not yet completed as of 2025-04-28. 14 days overdue.",
+      "parts_used": []
+    },
+    {
+      "wo_id": "WO-9812",
+      "asset_id": "SEAL-SB1-BPK",
+      "plant_id": "bend-packaging",
+      "line_id": "BPK-LINE-1",
+      "type": "PM",
+      "description": "High-limit cutout verification",
+      "status": "completed",
+      "scheduled_date": "2025-01-10",
+      "completed_date": "2025-01-12",
+      "technician": "L. Santos",
+      "notes": "High-limit cutout tested at 175°C setpoint — tripped correctly. SSR visual inspection OK. No signs of overheating.",
+      "parts_used": []
+    },
+    {
+      "wo_id": "WO-9850",
+      "asset_id": "SEAL-SB2-BPK",
+      "plant_id": "bend-packaging",
+      "line_id": "BPK-LINE-1",
+      "type": "CM",
+      "description": "SSR replacement — temperature runaway INC-2024-015",
+      "status": "completed",
+      "scheduled_date": "2024-10-02",
+      "completed_date": "2024-10-02",
+      "technician": "L. Santos",
+      "notes": "SSR failed closed (latched-on). Replaced with Crydom D2425 SSR. All SB1 and SB2 SSRs added to annual PM.",
+      "parts_used": [
+        { "part_no": "SSR-D2425", "qty": 1, "supplier": "Crydom", "lot": "CRY-2024-444" }
+      ]
+    },
+    {
+      "wo_id": "WO-9900",
+      "asset_id": "PRESS-P4-TFB",
+      "plant_id": "tacoma-fabrication",
+      "line_id": "TFB-LINE-2",
+      "type": "PM",
+      "description": "Die inspection and temperature log review",
+      "status": "completed",
+      "scheduled_date": "2025-03-28",
+      "completed_date": "2025-03-28",
+      "technician": "M. Okafor",
+      "notes": "Die in good condition. Temperature log checked — ambient temp been stable 20–24°C this month. No abnormalities.",
+      "parts_used": []
+    },
+    {
+      "wo_id": "WO-9950",
+      "asset_id": "CONV-C08-SAP",
+      "plant_id": "spokane-assembly",
+      "line_id": "SAP-LINE-B",
+      "type": "CM",
+      "description": "Investigation — throughput drop INC-2025-009",
+      "status": "open",
+      "scheduled_date": "2025-04-22",
+      "completed_date": null,
+      "technician": "R. Patel",
+      "notes": "Investigating throughput drop and sluggish conveyor. Vibration readings taken: 3.8 mm/s RMS — Zone B but elevated from last PM reading of 1.6 mm/s. Checking drive chain tension and bearing condition.",
+      "parts_used": []
+    }
+  ]
+}
