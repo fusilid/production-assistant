@@ -64,8 +64,18 @@ export type Hypothesis = z.infer<typeof HypothesisSchema>;
 export type ActionItem = z.infer<typeof ActionItemSchema>;
 export type EvidenceItem = z.infer<typeof EvidenceItemSchema>;
 
+export const DRAFT_KINDS = ["shift_handoff", "maintenance_request", "capa_outline", "supplier_questions"] as const;
+export type DraftKind = (typeof DRAFT_KINDS)[number];
+
+export const DRAFT_LABELS: Record<DraftKind, string> = {
+  shift_handoff: "Shift Handoff Note",
+  maintenance_request: "Maintenance Request",
+  capa_outline: "CAPA Outline",
+  supplier_questions: "Supplier Questions",
+};
+
 export const DraftRequestSchema = z.object({
-  kind: z.enum(["shift_handoff", "maintenance_request", "capa_outline", "supplier_questions"]),
+  kind: z.enum(DRAFT_KINDS),
   incident: IncidentInputSchema,
   analysis: AnalysisSchema,
 });

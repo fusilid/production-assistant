@@ -21,6 +21,14 @@ export interface SafetyEscalationResult {
   reason?: string;
 }
 
+export function buildSafetyText(incident: {
+  problem_statement: string;
+  logs?: string;
+  notes?: string;
+}): string {
+  return `${incident.problem_statement} ${incident.logs ?? ""} ${incident.notes ?? ""}`;
+}
+
 export function detectSafetyEscalation(text: string): SafetyEscalationResult {
   const lower = text.toLowerCase();
   const matched: string[] = [];

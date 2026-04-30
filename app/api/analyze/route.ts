@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { IncidentInputSchema } from "@/lib/schemas";
-import { detectSafetyEscalation } from "@/lib/safety";
+import { detectSafetyEscalation, buildSafetyText } from "@/lib/safety";
 import { getRelevantStandards } from "@/lib/context/standards";
 import { getRelevantIncidents } from "@/lib/context/incidents";
 import { getRelevantMaintenance } from "@/lib/context/maintenance";
@@ -26,8 +26,7 @@ export async function POST(req: NextRequest) {
 
   const incident = parsed.data;
 
-  const safetyText = `${incident.problem_statement} ${incident.logs ?? ""} ${incident.notes ?? ""}`;
-  const safetyResult = detectSafetyEscalation(safetyText);
+  const safetyResult = detectSafetyEscalation(buildSafetyText(incident));
 
   const standards = getRelevantStandards(incident);
   const incidents = getRelevantIncidents(incident);

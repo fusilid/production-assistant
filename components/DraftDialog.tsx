@@ -4,19 +4,11 @@ import { useState, useCallback, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import type { IncidentInput, Analysis } from "@/lib/schemas";
-
-type DraftKind = "shift_handoff" | "maintenance_request" | "capa_outline" | "supplier_questions";
-
-const DRAFT_LABELS: Record<DraftKind, string> = {
-  shift_handoff: "Shift Handoff Note",
-  maintenance_request: "Maintenance Request",
-  capa_outline: "CAPA Outline",
-  supplier_questions: "Supplier Questions",
-};
+import type { IncidentInput, Analysis, DraftKind } from "@/lib/schemas";
+import { DRAFT_LABELS } from "@/lib/schemas";
 
 interface Props {
-  kind: DraftKind | null;
+  kind: DraftKind;
   incident: IncidentInput;
   analysis: Analysis;
   onClose: () => void;
@@ -29,7 +21,6 @@ export function DraftDialog({ kind, incident, analysis, onClose }: Props) {
   const [copied, setCopied] = useState(false);
 
   const generateDraft = useCallback(async () => {
-    if (!kind) return;
     setIsLoading(true);
     setError(null);
     setDraft("");
@@ -52,11 +43,9 @@ export function DraftDialog({ kind, incident, analysis, onClose }: Props) {
     }
   }, [kind, incident, analysis]);
 
-  // Auto-generate when dialog opens
   useEffect(() => {
-    if (kind) generateDraft();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [kind]);
+    generateDraft();
+  }, [generateDraft]);
 
   const handleOpenChange = (open: boolean) => {
     if (!open) onClose();
@@ -69,11 +58,11 @@ export function DraftDialog({ kind, incident, analysis, onClose }: Props) {
   }
 
   return (
-    <Dialog open={!!kind} onOpenChange={handleOpenChange}>
+    <Dialog open onOpenChange={handleOpenChange}>
       <DialogContent className="bg-gray-900 border-gray-700 text-gray-100 max-w-2xl max-h-[80vh] flex flex-col">
         <DialogHeader>
           <DialogTitle className="text-gray-100">
-            {kind ? DRAFT_LABELS[kind] : ""}{" "}
+            {DRAFT_LABELS[kind]}{" "}
             <span className="text-yellow-400 text-sm font-normal">[DRAFT — Review before use]</span>
           </DialogTitle>
         </DialogHeader>

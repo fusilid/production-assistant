@@ -10,6 +10,7 @@ import {
   repairJson,
   type StreamingAnalysis,
 } from "@/lib/streamParser";
+import { stripMarkdownFences } from "@/lib/utils";
 
 export default function Home() {
   const [analysis, setAnalysis] = useState<Analysis | null>(null);
@@ -63,12 +64,7 @@ export default function Home() {
         setStreamingAnalysis(lastStreaming);
       }
 
-      // Try to parse the complete response, repairing truncated JSON if needed
-      const rawCleaned = rawText
-        .replace(/^```json\s*/i, "")
-        .replace(/^```\s*/i, "")
-        .replace(/```\s*$/i, "")
-        .trim();
+      const rawCleaned = stripMarkdownFences(rawText);
 
       const parsedJson = repairJson(rawCleaned);
 

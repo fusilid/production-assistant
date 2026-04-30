@@ -1,10 +1,4 @@
-import type { IncidentInput, Analysis } from "@/lib/schemas";
-
-type DraftKind =
-  | "shift_handoff"
-  | "maintenance_request"
-  | "capa_outline"
-  | "supplier_questions";
+import type { IncidentInput, Analysis, DraftKind } from "@/lib/schemas";
 
 function buildEvidenceSummary(analysis: Analysis): string {
   const evidenceIds = new Set<string>();

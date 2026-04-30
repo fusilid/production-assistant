@@ -14,14 +14,15 @@ dotenv.config({ path: path.join(process.cwd(), ".env") });
 
 import Anthropic from "@anthropic-ai/sdk";
 import { AnalysisSchema, IncidentInputSchema, type IncidentInput } from "../lib/schemas";
-import { detectSafetyEscalation } from "../lib/safety";
+import { detectSafetyEscalation, buildSafetyText } from "../lib/safety";
+import { stripMarkdownFences } from "../lib/utils";
 import { getRelevantStandards } from "../lib/context/standards";
 import { getRelevantIncidents } from "../lib/context/incidents";
 import { getRelevantMaintenance } from "../lib/context/maintenance";
 import { getRelevantQualityThresholds } from "../lib/context/quality";
 import { buildAnalysisPrompt } from "../lib/prompts/analyze";
 
-const MODEL = "claude-sonnet-4-5";
+const MODEL = "claude-sonnet-4-6";
 
 const CANNED_INCIDENTS: Array<{ label: string; incident: IncidentInput }> = [
   {
@@ -190,8 +191,7 @@ async function runEval() {
       continue;
     }
 
-    const safetyText = `${incident.problem_statement} ${incident.logs ?? ""} ${incident.notes ?? ""}`;
-    const safetyResult = detectSafetyEscalation(safetyText);
+    const safetyResult = detectSafetyEscalation(buildSafetyText(incident));
 
     const standards = getRelevantStandards(incident);
     const incidents = getRelevantIncidents(incident);
@@ -217,11 +217,7 @@ async function runEval() {
       const textBlock = message.content.find((b) => b.type === "text");
       if (!textBlock || textBlock.type !== "text") throw new Error("No text block in response");
 
-      const rawContent = textBlock.text
-        .replace(/^```json\s*/i, "")
-        .replace(/^```\s*/i, "")
-        .replace(/```\s*$/i, "")
-        .trim();
+      const rawContent = stripMarkdownFences(textBlock.text);
 
       const parsed = JSON.parse(rawContent);
       const analysisResult = AnalysisSchema.safeParse(parsed);

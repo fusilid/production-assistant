@@ -7,7 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { SafetyBanner } from "@/components/SafetyBanner";
 import { DraftDialog } from "@/components/DraftDialog";
-import type { Analysis, IncidentInput, ActionItem, Hypothesis } from "@/lib/schemas";
+import type { Analysis, IncidentInput, ActionItem, Hypothesis, DraftKind } from "@/lib/schemas";
+import { DRAFT_LABELS } from "@/lib/schemas";
 import {
   hasAnyStreamingData,
   type StreamingAnalysis,
@@ -18,8 +19,6 @@ import {
 // ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
-
-type DraftKind = "shift_handoff" | "maintenance_request" | "capa_outline" | "supplier_questions";
 
 interface Props {
   analysis: Analysis | null;
@@ -34,13 +33,6 @@ interface Props {
 // ---------------------------------------------------------------------------
 // Style maps
 // ---------------------------------------------------------------------------
-
-const DRAFT_LABELS: Record<DraftKind, string> = {
-  shift_handoff: "Shift Handoff",
-  maintenance_request: "Maintenance Request",
-  capa_outline: "CAPA Outline",
-  supplier_questions: "Supplier Questions",
-};
 
 const CONFIDENCE_STYLES: Record<string, string> = {
   high: "bg-red-900/60 text-red-300 border-red-700",
@@ -388,29 +380,7 @@ export function AnalysisPanel({
         </div>
       </section>
 
-      <section>
-        <h2 className="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-3">
-          Action Plan
-        </h2>
-        <div className="space-y-4">
-          {ACTION_BUCKETS.map(([key, label, border]) => {
-            const items = analysis.actions[key];
-            if (items.length === 0) return null;
-            return (
-              <div key={key} className={`border-l-2 ${border} pl-3`}>
-                <h3 className="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-2">
-                  {label}
-                </h3>
-                <div className="space-y-2">
-                  {items.map((action, i) => (
-                    <ActionCard key={i} action={action} />
-                  ))}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
+      <ActionsSection actions={analysis.actions} />
 
       {suggestedDrafts.length > 0 && (
         <section>

@@ -75,7 +75,7 @@ export function IncidentForm({ onSubmit, isLoading }: Props) {
 
   function validate(): boolean {
     const errs: Record<string, string> = {};
-    if (!problem.trim() || problem.trim().length < 10)
+    if (problem.trim().length < 10)
       errs.problem = "Problem statement required (min 10 characters)";
     if (!plantId) errs.plant = "Select a plant";
     if (!lineId) errs.line = "Select a line";
