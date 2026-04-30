@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
   const parsed = DraftRequestSchema.safeParse(body);
   if (!parsed.success) {
     return NextResponse.json(
-      { error: "Invalid draft request", details: parsed.error.flatten() },
+      { error: "Invalid draft request", details: parsed.error.issues },
       { status: 400 }
     );
   }

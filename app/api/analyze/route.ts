@@ -1,4 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
+
+// LLM streaming can take 20–30 s. Set to your plan's max (Netlify Pro = 26 s).
+export const maxDuration = 25;
 import { IncidentInputSchema } from "@/lib/schemas";
 import { detectSafetyEscalation, buildSafetyText } from "@/lib/safety";
 import { getRelevantStandards } from "@/lib/context/standards";
@@ -19,7 +22,7 @@ export async function POST(req: NextRequest) {
   const parsed = IncidentInputSchema.safeParse(body);
   if (!parsed.success) {
     return NextResponse.json(
-      { error: "Invalid incident input", details: parsed.error.flatten() },
+      { error: "Invalid incident input", details: parsed.error.issues },
       { status: 400 }
     );
   }

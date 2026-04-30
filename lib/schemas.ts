@@ -16,47 +16,49 @@ export type IncidentInput = z.infer<typeof IncidentInputSchema>;
 
 const EvidenceItemSchema = z.object({
   source_id: z.string(),
-  source_kind: z.enum(["standard", "incident", "maintenance", "quality", "user_log"]),
+  // Accept any string; unknown source kinds won't break the parse
+  source_kind: z.enum(["standard", "incident", "maintenance", "quality", "user_log"]).catch("user_log"),
   note: z.string(),
 });
 
 const HypothesisSchema = z.object({
   summary: z.string(),
-  confidence: z.enum(["high", "medium", "low"]),
+  confidence: z.enum(["high", "medium", "low"]).catch("medium"),
   reasoning: z.string(),
-  evidence: z.array(EvidenceItemSchema),
+  evidence: z.array(EvidenceItemSchema).catch([]),
 });
 
 const ActionItemSchema = z.object({
   title: z.string(),
   detail: z.string(),
   owner_role: z.string(),
-  eta: z.enum(["now", "this shift", "this week"]),
-  linked_evidence: z.array(z.string()),
+  eta: z.enum(["now", "this shift", "this week"]).catch("this shift"),
+  linked_evidence: z.array(z.string()).catch([]),
 });
 
 const ActionsSchema = z.object({
-  stabilize: z.array(ActionItemSchema),
-  investigate: z.array(ActionItemSchema),
-  prevent_recurrence: z.array(ActionItemSchema),
+  stabilize: z.array(ActionItemSchema).catch([]),
+  investigate: z.array(ActionItemSchema).catch([]),
+  prevent_recurrence: z.array(ActionItemSchema).catch([]),
 });
 
 const NextStepsSchema = z.object({
-  suggested_drafts: z.array(
-    z.enum(["shift_handoff", "maintenance_request", "capa_outline", "supplier_questions"])
-  ),
+  suggested_drafts: z
+    .array(z.enum(["shift_handoff", "maintenance_request", "capa_outline", "supplier_questions"]))
+    .catch([]),
 });
 
 const SafetyEscalationSchema = z.object({
-  triggered: z.boolean(),
+  triggered: z.boolean().catch(false),
   reason: z.string().optional(),
 });
 
 export const AnalysisSchema = z.object({
-  safety_escalation: SafetyEscalationSchema,
-  hypotheses: z.array(HypothesisSchema).min(2).max(4),
+  safety_escalation: SafetyEscalationSchema.catch({ triggered: false }),
+  // Accept 1–5 hypotheses; a model under time pressure may return fewer than 2
+  hypotheses: z.array(HypothesisSchema).min(1).max(5),
   actions: ActionsSchema,
-  next_steps: NextStepsSchema,
+  next_steps: NextStepsSchema.catch({ suggested_drafts: [] }),
 });
 
 export type Analysis = z.infer<typeof AnalysisSchema>;

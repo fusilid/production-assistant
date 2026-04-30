@@ -89,12 +89,17 @@ export function repairJson(raw: string): unknown | null {
   // Fast path — already valid
   try { return JSON.parse(text); } catch { /* fall through */ }
 
-  // Walk the text tracking open brackets and string state
+  // Strip trailing commas before any closing bracket — models occasionally emit these
+  // e.g. [{"a":1},] or {"a":1,} — do this before the bracket walk so stack ends correct
+  const cleaned = text.replace(/,\s*([}\]])/g, "$1");
+  try { return JSON.parse(cleaned); } catch { /* fall through */ }
+
+  // Walk cleaned text tracking open brackets and string state to find what's missing
   const stack: string[] = [];
   let inString = false;
   let escape = false;
 
-  for (const ch of text) {
+  for (const ch of cleaned) {
     if (escape) { escape = false; continue; }
     if (ch === "\\" && inString) { escape = true; continue; }
     if (ch === '"') { inString = !inString; continue; }
@@ -105,10 +110,12 @@ export function repairJson(raw: string): unknown | null {
     }
   }
 
-  if (stack.length === 0 && !inString) return null; // Nothing to repair
+  // Nothing structurally open — JSON is balanced but still invalid (e.g. bad escape).
+  // Return null; we can't repair arbitrary syntax errors.
+  if (stack.length === 0 && !inString) return null;
 
-  // Close any open string, strip trailing comma, close open brackets
-  let repaired = inString ? text + '"' : text;
+  // Close any open string, strip trailing comma/whitespace, close open brackets
+  let repaired = inString ? cleaned + '"' : cleaned;
   repaired = repaired.trimEnd().replace(/,\s*$/, "").trimEnd();
   repaired += stack.reverse().join("");
 

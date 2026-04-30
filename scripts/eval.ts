@@ -186,7 +186,7 @@ async function runEval() {
 
     const validated = IncidentInputSchema.safeParse(incident);
     if (!validated.success) {
-      console.log(`FAIL (input validation: ${JSON.stringify(validated.error.flatten())})`);
+      console.log(`FAIL (input validation: ${JSON.stringify(validated.error.issues)})`);
       results.push({ label, passed: false, error: "Input validation failed" });
       continue;
     }
@@ -223,11 +223,10 @@ async function runEval() {
       const analysisResult = AnalysisSchema.safeParse(parsed);
 
       if (!analysisResult.success) {
-        const errors = JSON.stringify(analysisResult.error.flatten(), null, 2);
-        console.log(`FAIL (schema validation)`);
+          console.log(`FAIL (schema validation)`);
         fs.writeFileSync(
           path.join(runDir, `${label}.error.json`),
-          JSON.stringify({ raw: parsed, errors: analysisResult.error.flatten() }, null, 2)
+          JSON.stringify({ raw: parsed, errors: analysisResult.error.issues }, null, 2)
         );
         results.push({ label, passed: false, error: "Schema validation failed" });
         continue;
