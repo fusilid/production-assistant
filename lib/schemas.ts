@@ -5,8 +5,8 @@ export const IncidentInputSchema = z.object({
   plant_id: z.string(),
   line_id: z.string(),
   timeframe: z.object({
-    start: z.string().datetime({ message: "start must be an ISO datetime string" }),
-    end: z.string().datetime({ message: "end must be an ISO datetime string" }),
+    start: z.iso.datetime({ error: "start must be an ISO datetime string" }),
+    end: z.iso.datetime({ error: "end must be an ISO datetime string" }),
   }),
   logs: z.string().optional(),
   notes: z.string().optional(),
@@ -15,23 +15,23 @@ export const IncidentInputSchema = z.object({
 export type IncidentInput = z.infer<typeof IncidentInputSchema>;
 
 const EvidenceItemSchema = z.object({
-  source_id: z.string(),
-  // Accept any string; unknown source kinds won't break the parse
+  source_id: z.string().catch(""),
   source_kind: z.enum(["standard", "incident", "maintenance", "quality", "user_log"]).catch("user_log"),
-  note: z.string(),
+  note: z.string().catch(""),
 });
 
 const HypothesisSchema = z.object({
   summary: z.string(),
   confidence: z.enum(["high", "medium", "low"]).catch("medium"),
-  reasoning: z.string(),
+  // Truncated reasoning or missing field — accept empty string rather than failing the parse
+  reasoning: z.string().catch(""),
   evidence: z.array(EvidenceItemSchema).catch([]),
 });
 
 const ActionItemSchema = z.object({
-  title: z.string(),
-  detail: z.string(),
-  owner_role: z.string(),
+  title: z.string().catch(""),
+  detail: z.string().catch(""),
+  owner_role: z.string().catch(""),
   eta: z.enum(["now", "this shift", "this week"]).catch("this shift"),
   linked_evidence: z.array(z.string()).catch([]),
 });
@@ -55,9 +55,10 @@ const SafetyEscalationSchema = z.object({
 
 export const AnalysisSchema = z.object({
   safety_escalation: SafetyEscalationSchema.catch({ triggered: false }),
-  // Accept 1–5 hypotheses; a model under time pressure may return fewer than 2
+  // min(1): require at least one usable hypothesis; truncated responses may have fewer than 2
   hypotheses: z.array(HypothesisSchema).min(1).max(5),
-  actions: ActionsSchema,
+  // Truncation often cuts the response before actions are written — default to empty buckets
+  actions: ActionsSchema.catch({ stabilize: [], investigate: [], prevent_recurrence: [] }),
   next_steps: NextStepsSchema.catch({ suggested_drafts: [] }),
 });
 
